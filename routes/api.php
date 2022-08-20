@@ -24,15 +24,25 @@ Route::post("/products", function(){
 
 //Route::resource("products", ProductController::class);
 
-//Public routes
+/*-----<PUBLIC ROUTES>-----*/
 Route::post("/register", [AuthController::class, "register"]);
 Route::post("/login", [AuthController::class, "login"]);
 Route::get("products/search/{name}", [ProductController::class, "search"]);
+
+/**
+ * Liste de tous les produits
+ */
 Route::get("/products", [ProductController::class, "index"]);
+
+/**
+ * afficher un produit suivant l'id
+ */
 Route::get("/products/{id}", [ProductController::class, "show"]);
 
 
-//protected routes
+
+
+/*-----<PROTECTED ROUTES>-----*/
 Route::middleware(["auth:sanctum"])->group(function(){
     Route::post("/products", [ProductController::class, "store"]);
     Route::put("/products/{id}", [ProductController::class, "update"]);
@@ -41,6 +51,7 @@ Route::middleware(["auth:sanctum"])->group(function(){
     //deconnexion
     Route::post("/logout", [AuthController::class, "logout"]);
 });
+
 
 //others method to protect routes
 Route::group(['middleware' => 'auth:sanctum'], function(){
